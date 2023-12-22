@@ -1,0 +1,26 @@
+version: '2'
+
+services:
+  watchtower:
+    image: containrrr/watchtower
+    container_name: watchtower
+    hostname: SRVDOCKER01
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /etc/timezone:/etc/timezone:ro
+    environment:
+      TZ: 'Europe/Paris'
+      WATCHTOWER_SCHEDULE: '0 0 */12 * * *'
+      WATCHTOWER_CLEANUP: true
+      WATCHTOWER_LABEL_ENABLE: true
+      WATCHTOWER_INCLUDE_RESTARTING: true
+      WATCHTOWER_NOTIFICATIONS_LEVEL: info
+      WATCHTOWER_NOTIFICATIONS: shoutrrr
+      #https://discord.com/api/webhooks/XXXXXXXXXXXXXXXX/ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
+      WATCHTOWER_NOTIFICATION_URL: "discord://ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ@XXXXXXXXXXXXXXXX?splitlines=no"
+      WATCHTOWER_NOTIFICATION_TEMPLATE: "{{range .}}{{.Time.Format \"2006-01-02 15:04:05\"}} ({{.Level}}): {{.Message}}{{println}}{{end}}"
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+
+
