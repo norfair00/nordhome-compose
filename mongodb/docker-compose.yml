@@ -1,0 +1,15 @@
+version: '2'
+
+services:
+  mongodb:
+    image: docker.io/bitnami/mongodb:7.0
+    ports:
+      - "27017:27017"
+    env_file:
+      - stack.env
+    volumes:
+      - 'mongodb_data:/bitnami/mongodb'
+
+volumes:
+  mongodb_data:
+    external: true
